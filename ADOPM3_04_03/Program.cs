@@ -10,17 +10,20 @@ namespace ADOPM3_04_03
 	{
 		int[] data = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 		public int this[int idx] { get { return data[idx]; } }
+
 		public int Length => data.Length;
 		
 		public IEnumerator<int> GetEnumerator()
 		{
-			//foreach (int i in data)
-				//yield return i;
-			
+			foreach (int i in data)
+				yield return i;
+
+			/*
 			for (int i = 4; i < 8; i++)
 			{
                 yield return data[i];
             }
+			*/
 			
         }
 		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator(); // needed as IEnumerable<> implmenents IEnumerable.
