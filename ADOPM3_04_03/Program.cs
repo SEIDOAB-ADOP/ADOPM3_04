@@ -9,25 +9,29 @@ namespace ADOPM3_04_03
 	public class EnumerableSimple : IEnumerable<int>
 	{
 		int[] data = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-		public int this[int idx] { get { return data[idx]; } }
+		public int this[int idx] => data[idx]; 
 
 		public int Length => data.Length;
+		
 		
 		public IEnumerator<int> GetEnumerator()
 		{
 			foreach (int i in data)
 				yield return i;
+		}
 
-			/*
-			for (int i = 4; i < 8; i++)
-			{
-                yield return data[i];
-            }
-			*/
+		// 	/*
+		// 	for (int i = 4; i < 8; i++)
+		// 	{
+        //         yield return data[i];
+        //     }
+		// 	*/
 			
-        }
-		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator(); // needed as IEnumerable<> implmenents IEnumerable.
-																// keep private
+        // }
+		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator(); 
+		// needed as IEnumerable<> implmenents IEnumerable.
+		// keep private
+																
 	}
 	public class EnumerableFromScratch : IEnumerable<int>
 	{
@@ -59,10 +63,15 @@ namespace ADOPM3_04_03
             var myClass = new EnumerableSimple();
 			for (int i = 0; i < myClass.Length; i++)
 			{
-				Console.WriteLine(myClass[i]);
+				System.Console.WriteLine(myClass[i]);
 			}
 
-			foreach (var item in myClass)
+
+			// for (int i = 0; i < myClass.Length; i++)
+			// {
+			// 	Console.WriteLine(myClass[i]);
+			// }
+			foreach (var item in myClass.Take(5).Reverse())
 			{
 				Console.WriteLine(item);
 			}

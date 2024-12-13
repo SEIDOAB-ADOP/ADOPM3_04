@@ -21,7 +21,9 @@ namespace ADOPM3_04_01
         {
             //enumerate a string
             foreach (char c in "beer")
+            {
                 Console.WriteLine(c); // b, e, e, r,
+            }
 
             
             Console.WriteLine();

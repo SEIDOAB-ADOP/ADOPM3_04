@@ -78,6 +78,12 @@ namespace ADOPM3_04_02
                 Console.WriteLine(item);
             }
 
+			System.Console.WriteLine("\nWith Linq");
+			foreach (var item in BogusLatin().OrderBy(x => x))
+			{
+				System.Console.WriteLine(item);
+			}
+
 
 
 			foreach (var item in Fibs(15))
