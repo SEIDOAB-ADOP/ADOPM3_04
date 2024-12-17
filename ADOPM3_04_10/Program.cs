@@ -6,32 +6,47 @@ namespace ADOPM3_04_10
 {
     class Program
     {
-        class csCar
+        class Car : IEquatable<Car>
         {
             public int Year { get; set; }
             public string Make { get; set; }
 
             public override string ToString() => $"Year: {Year}, Make: {Make}";
+
+            //IEquatable
             public override int GetHashCode() => (Year, Make).GetHashCode();
+            public bool Equals(Car other) => (Year, Make) == (other.Year, other.Make);
+            public override bool Equals(object obj) => Equals(obj as Car);
         }
 
         static void Main(string[] args)
         {
-            //Dictionary of cars
-            Dictionary<string, csCar> dicRegNr= new Dictionary<string, csCar>();
-            dicRegNr.Add("NMN 854", new csCar { Year = 2022, Make = "Volvo" });
-            dicRegNr.Add("YMY 789", new csCar { Year = 2019, Make = "Suzuki" });
+            //List of cars
+            List<Car> listRegNr= new List<Car>();
+            listRegNr.Add(new Car { Year = 2022, Make = "Volvo" });
+            listRegNr.Add(new Car { Year = 2019, Make = "Suzuki" });
+            System.Console.WriteLine(listRegNr[0]);
+            Car myCar0 = listRegNr[0];
+            System.Console.WriteLine(myCar0.GetHashCode());
             
+            //Dictionary of cars
+            Dictionary<string, Car> dicRegNr= new Dictionary<string, Car>();
+            dicRegNr.Add("NMN 854", new Car { Year = 2022, Make = "Volvo" });
+            dicRegNr.Add("YMY 789", new Car { Year = 2019, Make = "Suzuki" });
+            
+            System.Console.WriteLine("NMN 854".GetHashCode());
+
             //Accessing the Dictionary
-            Console.WriteLine(dicRegNr["NMN 854"].Make);
-            csCar myCar = dicRegNr["YMY 789"];
+            Console.WriteLine(dicRegNr["NMN 854"]);
+            Car myCar = dicRegNr["YMY 789"];
             Console.WriteLine(myCar);
 
-
-            //Dictionary uses HashCode for the key
-            Console.WriteLine();
-            Console.WriteLine("NMN 854".GetHashCode());
-            Console.WriteLine("YMY 789".GetHashCode());
+            //Using Car as Key
+            Dictionary<Car, string> dicCarUri = new Dictionary<Car, string>();
+            dicCarUri[new Car { Year = 2019, Make = "Suzuki" }] = "Uri to webpages for suzuki";
+            dicCarUri[new Car { Year = 2022, Make = "Volvo" }] = "Uri to webpages for volvo";
+            System.Console.WriteLine(dicCarUri[myCar0]);
+            System.Console.WriteLine(dicCarUri[myCar]);
 
 
             //Value in Dictionary can be of any type, also a List
@@ -44,7 +59,6 @@ namespace ADOPM3_04_10
             Console.WriteLine();
             var l = dicFavoriteBands["AC/DC"];
             l.ForEach(item => Console.WriteLine(item));
-
 
             //Dictionay Keys and Values can be accessed as collections
             foreach (var performer in dicFavoriteBands.Keys)
@@ -61,13 +75,13 @@ namespace ADOPM3_04_10
             var myAlbums = dicFavoriteBands.ToList();
 
 
-            //Keys can also be of a complex type, because the types hash code is used
-            Dictionary<csCar, List<string>> dicSpareParts = new Dictionary<csCar, List<string>>();
+            //Keys can also be of a complex type, because the IEquatable are used
+            Dictionary<Car, List<string>> dicSpareParts = new Dictionary<Car, List<string>>();
 
-            dicSpareParts.Add(new csCar { Year = 2022, Make = "Volvo" },
+            dicSpareParts.Add(new Car { Year = 2022, Make = "Volvo" },
                 new List<string>(){ "Sparepart1 for a 2020 Volvo", "Sparepart2 for a 2020 Volvo"});
 
-            dicSpareParts.Add(new csCar { Year = 2019, Make = "Suzuki" },
+            dicSpareParts.Add(new Car { Year = 2019, Make = "Suzuki" },
                 new List<string>() { "Sparepart1 for a 2019 Suzuki", "Sparepart2 for a 2019 Suzuki",
                                      "Sparepart3 for a 2019 Suzuki", "Sparepart3 for a 2019 Suzuki"});
 
@@ -81,8 +95,4 @@ namespace ADOPM3_04_10
             }
         }
     }
-
-    //Exercise:
-    //1.    Use Rectangle from Example6_09 and implement a Dictionary that from a SortedSet<T> extracts the largest Rectangle of each Color. 
-    //      Printout the result
 }
