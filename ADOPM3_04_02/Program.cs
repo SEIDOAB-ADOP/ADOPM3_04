@@ -10,7 +10,7 @@ namespace ADOPM3_04_02
         static string NotAnEnumerable()
         {
             return "Hello";
-            return "World";
+            return "World";			//We will never come here
             return "Hello again";
         }
         
