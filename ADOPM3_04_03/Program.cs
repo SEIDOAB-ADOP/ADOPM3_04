@@ -8,26 +8,14 @@ namespace ADOPM3_04_03
 {
 	public class EnumerableSimple : IEnumerable<int>
 	{
-		int[] data = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+		List<int> data = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+		public IEnumerator<int> GetEnumerator() => data.GetEnumerator();
+		
+
 		public int this[int idx] => data[idx]; 
-
-		public int Length => data.Length;
+		public int Length => data.Count;
 		
-		
-		public IEnumerator<int> GetEnumerator()
-		{
-			foreach (int i in data)
-				yield return i;
-		}
-
-		// 	/*
-		// 	for (int i = 4; i < 8; i++)
-		// 	{
-        //         yield return data[i];
-        //     }
-		// 	*/
-			
-        // }
+		//Legacy implementation
 		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator(); 
 		// needed as IEnumerable<> implmenents IEnumerable.
 		// keep private
@@ -56,6 +44,7 @@ namespace ADOPM3_04_03
 			void IDisposable.Dispose() { } // Needed by IEnumerable<> in case unmanged memory needs to be released
 		}
 	}
+
 	class Program
     {
         static void Main(string[] args)
